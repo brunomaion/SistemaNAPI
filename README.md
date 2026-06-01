@@ -28,5 +28,6 @@ Requisitos
 git clone <repositorio>
 cd frontend
 npm install
+npm install react-router-dom
 npm run dev
 ```
