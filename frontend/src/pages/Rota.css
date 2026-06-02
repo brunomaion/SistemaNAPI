@@ -1,0 +1,15 @@
+.rota-container {
+    background: #f4f6f8;
+    min-height: 100vh;
+}
+
+.rota-content {
+    padding: 20px 40px;
+}
+
+.rota-info {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}

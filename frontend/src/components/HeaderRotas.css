@@ -1,0 +1,37 @@
+.rotas-header {
+    display: flex;
+    gap: 10px;
+
+    background: white;
+
+    padding: 15px 20px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    margin-bottom: 20px;
+}
+
+.rota-link {
+    text-decoration: none;
+
+    color: #222;
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    font-weight: 500;
+
+    transition: 0.2s;
+}
+
+.rota-link:hover {
+    background: rgba(0, 159, 16, 0.1);
+}
+
+.rota-link.active {
+    background: #009f10;
+    color: white;
+}
