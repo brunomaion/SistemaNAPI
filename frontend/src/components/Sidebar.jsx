@@ -12,6 +12,10 @@ function Sidebar({ menuOpen, setMenuOpen }) {
                     Home
                 </button>
 
+                <button onClick={() => { navigate("/gerenciarusuarios"); setMenuOpen(false); }}>
+                    Gerenciar Usuários
+                </button>
+
                 <button onClick={() => { navigate("/config"); setMenuOpen(false); }}>
                     Configurações
                 </button>
