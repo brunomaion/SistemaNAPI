@@ -68,18 +68,33 @@
     letter-spacing: 1px;
 }
 
-/* LINHAS */
+/* CELULAS */
 .admin-table td {
     padding: 12px;
     border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
+/* LINHAS */
 .admin-table tbody tr {
     transition: 0.2s;
 }
 
 .admin-table tbody tr:hover {
     background: #f9f9f9;
+}
+
+/* INPUTS DENTRO DA TABELA (IMPORTANTE PARA EDIÇÃO) */
+.admin-table input {
+    width: 100%;
+    min-width: 120px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    box-sizing: border-box;
+    background: #fafafa;
 }
 
 /* BOTÕES */
