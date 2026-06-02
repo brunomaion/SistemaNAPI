@@ -22,6 +22,11 @@ public class Rotas {
     @ElementCollection
     private List<String> pontos;
 
+    /*@ElementCollection
+    @CollectionTable(name = "rota_pontos", joinColumns = @JoinColumn(name = "rota_id"))
+    private List<Ponto> pontos;
+    */
+   
     @ElementCollection
     private List<String> clusters;
 

@@ -130,3 +130,19 @@ http://localhost:8080
 * Documentação OpenAPI/Swagger
 * CRUD completo de usuários
 * Tratamento padronizado de erros
+
+
+
+
+
+
+
+
+
+## A FAZER
+
+Autenticacao segura
+Criptografar senhas
+API KEY
+Separar rotas
+Sessao usando token

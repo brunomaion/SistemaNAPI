@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 function Home() {
     const [rotas, setRotas] = useState([]);
     const [mensagem, setMensagem] = useState("");
-
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [nomeRota, setNomeRota] = useState("");
     const buscarRotas = async () => {
         try {
             const response = await fetch("http://localhost:8080/rotas");
@@ -30,6 +31,57 @@ function Home() {
         buscarRotas();
     }, []);
 
+    const criarRota = async () => {
+        if (!nomeRota.trim()) {
+            setMensagem("Informe o nome da rota");
+            return;
+        }
+
+        try {
+            const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+            const response = await fetch(
+                "http://localhost:8080/rotas",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        nomeRota,
+                        autoresResponsaveisID: [
+                            String(usuario?.id)
+                        ],
+                        pontoOrigem: [],
+                        pontos: [],
+                        clusters: [],
+                        matrizCustoGlobal: "[]",
+                        matrizCustoClusters: "[]",
+                        custoTotal: 0,
+                        tempoTotal: 0
+                    }),
+                }
+            );
+
+            if (!response.ok) {
+                setMensagem("Erro ao criar rota");
+                return;
+            }
+
+            const rotaCriada = await response.json();
+
+            setMostrarModal(false);
+            setNomeRota("");
+
+            buscarRotas();
+
+            navigate(`/rota/${rotaCriada.id}`);
+
+        } catch (error) {
+            setMensagem("Erro ao criar rota");
+        }
+};
+
     return (
         <div className="home-container">
             <Header />
@@ -42,7 +94,10 @@ function Home() {
                     <h2>Minhas Rotas</h2>
 
                     <div className="home-actions">
-                        <button className="btn">
+                        <button
+                            className="btn"
+                            onClick={() => setMostrarModal(true)}
+                        >
                             Nova rota
                         </button>
 
@@ -74,13 +129,13 @@ function Home() {
                                 </p>
 
                                 <p>
-                                    <strong>Pontos:</strong>{" "}
-                                    {rota.pontos?.join(" → ")}
+                                    <strong>Qtd. Pontos:</strong>{" "}
+                                    {rota.pontos.length}
                                 </p>
 
                                 <p>
-                                    <strong>Clusters:</strong>{" "}
-                                    {rota.clusters?.join(", ")}
+                                    <strong>Qtd. Clusters:</strong>{" "}
+                                    {rota.clusters.length}
                                 </p>
 
                                 <p>
@@ -99,6 +154,58 @@ function Home() {
                     )}
                 </div>
             </div>
+            {mostrarModal && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>Nova Rota</h2>
+
+                        <p>Informe o nome da rota</p>
+
+                        <input
+                            type="text"
+                            value={nomeRota}
+                            onChange={(e) => setNomeRota(e.target.value)}
+                            placeholder="Nome da rota"
+                            style={{
+                                width: "100%",
+                                padding: "10px",
+                                marginTop: "10px",
+                                borderRadius: "8px",
+                                border: "1px solid #ccc",
+                                boxSizing: "border-box"
+                            }}
+                        />
+
+                        <div
+                            style={{
+                                display: "flex",
+                                gap: "10px",
+                                justifyContent: "center",
+                                marginTop: "15px"
+                            }}
+                        >
+                            <button
+                                onClick={() => {
+                                    setMostrarModal(false);
+                                    setNomeRota("");
+                                }}
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                onClick={criarRota}
+                                style={{
+                                    background: "#009f10",
+                                    color: "white"
+                                }}
+                            >
+                                Criar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
