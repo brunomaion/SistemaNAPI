@@ -23,6 +23,10 @@
     cursor: pointer;
 }
 
+.actions {
+    display: flex;
+    align-items: center;
+}
 
 .actions button {
     margin-left: 10px;

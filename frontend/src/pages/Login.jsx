@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
@@ -8,6 +8,14 @@ function Login() {
     const [mensagem, setMensagem] = useState("");
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = localStorage.getItem("usuario");
+
+        if (user) {
+            navigate("/home");
+        }
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,6 +40,13 @@ function Login() {
             setMensagem(data.mensagem);
 
             if (data.sucesso) {
+                const usuarioLogado =
+                    data.usuario || data.user || {
+                        username,
+                        nome: data.nome || username,
+                    };
+
+                localStorage.setItem("usuario", JSON.stringify(usuarioLogado));
                 navigate("/home");
             }
         } catch (error) {

@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Components.css";
 import Sidebar from "./Sidebar";
 
 function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [usuario, setUsuario] = useState(null);
+    const [usuario] = useState(() => {
+        try {
+            const user = localStorage.getItem("usuario");
+
+            return user ? JSON.parse(user) : null;
+        } catch {
+            localStorage.removeItem("usuario");
+            return null;
+        }
+    });
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const user = localStorage.getItem("usuario");
-        if (user) {
-            setUsuario(JSON.parse(user));
-        }
-    }, []);
 
     const logout = () => {
         localStorage.removeItem("usuario");
@@ -32,15 +34,11 @@ function Header() {
                     ☰
                 </button>
 
-                {/* USUÁRIO LOGADO */}
-                <div className="user-info">
-                    {usuario && <span>Olá, {usuario.username}</span>}
-                </div>
 
-                {/* AÇÕES DIREITA */}
                 <div className="actions">
+                    
                     <button onClick={() => navigate("/perfil")}>
-                        Meu Perfil
+                        {usuario.username}
                     </button>
 
                     <button onClick={logout}>
