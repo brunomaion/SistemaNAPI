@@ -31,3 +31,10 @@ npm install
 npm install react-router-dom
 npm run dev
 ```
+
+
+#CORES
+
+#ffffff
+#000000
+#009f10
