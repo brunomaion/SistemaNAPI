@@ -33,6 +33,15 @@ public class UsuarioController {
         return service.cadastrar(usuario);
     }
 
+    @GetMapping("/{id}")
+    public Usuario buscarPorId(@PathVariable Long id) {
+        try {
+            return service.buscarPorId(id);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     @PutMapping("/{id}")
     public Usuario atualizar(@PathVariable Long id, @RequestBody Usuario usuario) {
         try {

@@ -32,6 +32,7 @@ public class UsuarioService {
 
         if (usuario == null) {
             return new LoginResponse(
+                    0,
                     false,
                     "Usuário não encontrado"
             );
@@ -39,12 +40,14 @@ public class UsuarioService {
 
         if (!usuario.getSenha().equals(senha)) {
             return new LoginResponse(
+                    0,
                     false,
                     "Senha incorreta"
             );
         }
 
         return new LoginResponse(
+                usuario.getId().intValue(),
                 true,
                 "Login realizado com sucesso"
         );
@@ -110,6 +113,11 @@ public class UsuarioService {
                 salvo.getNome(),
                 salvo.getEmail()
         );
+    }
+
+    public Usuario buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
     }
 
     public void deletar(Long id) {

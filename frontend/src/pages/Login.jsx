@@ -41,14 +41,37 @@ function Login() {
 
             if (data.sucesso) {
                 const usuarioResposta = data.usuario || data.user || {};
+                const usuarioId = data.id ?? usuarioResposta.id;
 
-                const usuarioLogado = {
+                let usuarioLogado = {
                     ...usuarioResposta,
-                    id: data.id ?? usuarioResposta.id,
+                    id: usuarioId,
                     username: usuarioResposta.username || username,
                     nome: usuarioResposta.nome || data.nome || username,
                     email: usuarioResposta.email || data.email || "",
                 };
+
+                if (usuarioId) {
+                    try {
+                        const usuarioResponse = await fetch(
+                            `http://localhost:8080/usuarios/${usuarioId}`
+                        );
+
+                        if (usuarioResponse.ok) {
+                            const usuarioData = await usuarioResponse.json();
+                            const usuarioCompleto =
+                                usuarioData.usuario || usuarioData;
+
+                            usuarioLogado = {
+                                ...usuarioLogado,
+                                ...usuarioCompleto,
+                                id: usuarioId,
+                            };
+                        }
+                    } catch {
+                        // Mantém os dados mínimos do login quando a busca falhar.
+                    }
+                }
 
                 localStorage.setItem("usuario", JSON.stringify(usuarioLogado));
                 navigate("/home");

@@ -6,16 +6,12 @@ import "./Login.css";
 function Perfil() {
     const navigate = useNavigate();
 
-    const [usuario, setUsuario] = useState(null);
-    const [mensagem, setMensagem] = useState("");
-
-    useEffect(() => {
+    const [usuario, setUsuario] = useState(() => {
         try {
             const user = localStorage.getItem("usuario");
 
             if (!user) {
-                navigate("/");
-                return;
+                return null;
             }
 
             const parsed = JSON.parse(user);
@@ -23,23 +19,34 @@ function Perfil() {
 
             if (!isValidUser) {
                 localStorage.removeItem("usuario");
-                navigate("/");
-                return;
+                return null;
             }
 
-            setUsuario(parsed);
-        } catch (error) {
+            return parsed;
+        } catch {
             localStorage.removeItem("usuario");
+            return null;
+        }
+    });
+    const [formData, setFormData] = useState({});
+    const [mensagem, setMensagem] = useState("");
+
+    useEffect(() => {
+        if (!usuario) {
             navigate("/");
         }
-    }, [navigate]);
+    }, [navigate, usuario]);
 
     const handleChange = (e) => {
-        setUsuario({
-            ...usuario,
-            [e.target.name]: e.target.value
-        });
+        setFormData((current) => ({
+            ...current,
+            [e.target.name]: e.target.value,
+        }));
     };
+
+    const getFieldValue = (field) => formData[field] ?? "";
+
+    const getPlaceholder = (field) => usuario?.[field] ?? "";
 
     const salvar = async (e) => {
         e.preventDefault();
@@ -50,6 +57,13 @@ function Perfil() {
             return;
         }
 
+        const usuarioAtualizado = {
+            ...usuario,
+            ...Object.fromEntries(
+                Object.entries(formData).filter(([, value]) => value !== undefined)
+            ),
+        };
+
         try {
             const response = await fetch(
                 `http://localhost:8080/usuarios/${usuario.id}`,
@@ -58,7 +72,7 @@ function Perfil() {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(usuario),
+                    body: JSON.stringify(usuarioAtualizado),
                 }
             );
 
@@ -69,12 +83,13 @@ function Perfil() {
                 return;
             }
 
-            const usuarioAtualizado = data.usuario || usuario;
-            localStorage.setItem("usuario", JSON.stringify(usuarioAtualizado));
-            setUsuario(usuarioAtualizado);
+            const usuarioSalvo = data.usuario || usuarioAtualizado;
+            localStorage.setItem("usuario", JSON.stringify(usuarioSalvo));
+            setUsuario(usuarioSalvo);
+            setFormData({});
             setMensagem(data.mensagem || "Perfil atualizado com sucesso");
 
-        } catch (error) {
+        } catch {
             setMensagem("Erro ao atualizar perfil");
         }
     };
@@ -90,46 +105,43 @@ function Perfil() {
                 <h5>Username</h5>
                 <input
                     name="username"
-                    value={usuario.username ?? ""}
+                    value={getFieldValue("username")}
                     onChange={handleChange}
-                    placeholder="Username"
+                    placeholder={getPlaceholder("username")}
                     disabled
                 />
 
                 <h5>E-mail</h5>
                 <input
-                    
                     name="email"
-                    value={usuario.email ?? ""}
+                    value={getFieldValue("email")}
                     onChange={handleChange}
-                    placeholder="Email"
+                    placeholder={getPlaceholder("email")}
                     disabled
                 />
 
                 <h5>Nome</h5>
                 <input
                     name="nome"
-                    value={usuario.nome ?? ""}
+                    value={getFieldValue("nome")}
                     onChange={handleChange}
-                    placeholder="Nome"
+                    placeholder={getPlaceholder("nome")}
                 />
-
-
 
                 <h5>Telefone</h5>
                 <input
                     name="telefone"
-                    value={usuario.telefone ?? ""}
+                    value={getFieldValue("telefone")}
                     onChange={handleChange}
-                    placeholder="Telefone"
+                    placeholder={getPlaceholder("telefone")}
                 />
 
                 <h5>Endereço</h5>
                 <input
                     name="endereco"
-                    value={usuario.endereco ?? ""}
+                    value={getFieldValue("endereco")}
                     onChange={handleChange}
-                    placeholder="Endereço"
+                    placeholder={getPlaceholder("endereco")}
                 />
 
                 <button type="submit">Salvar</button>
