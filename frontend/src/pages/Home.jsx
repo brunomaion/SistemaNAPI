@@ -1,5 +1,14 @@
+import Header from "../components/Header";
+
 function Home() {
-    return <h1>Home</h1>;
+    return (
+        <>
+            <Header />
+            <div style={{ marginTop: "80px" }}>
+                
+            </div>
+        </>
+    );
 }
 
 export default Home;
