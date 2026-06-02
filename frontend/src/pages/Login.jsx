@@ -40,16 +40,20 @@ function Login() {
             setMensagem(data.mensagem);
 
             if (data.sucesso) {
-                const usuarioLogado =
-                    data.usuario || data.user || {
-                        username,
-                        nome: data.nome || username,
-                    };
+                const usuarioResposta = data.usuario || data.user || {};
+
+                const usuarioLogado = {
+                    ...usuarioResposta,
+                    id: data.id ?? usuarioResposta.id,
+                    username: usuarioResposta.username || username,
+                    nome: usuarioResposta.nome || data.nome || username,
+                    email: usuarioResposta.email || data.email || "",
+                };
 
                 localStorage.setItem("usuario", JSON.stringify(usuarioLogado));
                 navigate("/home");
             }
-        } catch (error) {
+        } catch {
             setMensagem("Erro ao conectar ao servidor.");
         }
     };

@@ -1,0 +1,22 @@
+.campo-edit {
+    margin-bottom: 15px;
+}
+
+.linha-edit {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.linha-edit input {
+    flex: 1;
+}
+
+.linha-edit button {
+    background: #009f10;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

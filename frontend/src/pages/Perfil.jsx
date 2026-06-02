@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 import "./Login.css";
 
 function Perfil() {
@@ -82,16 +83,30 @@ function Perfil() {
 
     return (
         <div className="container">
+            <Header />
             <form onSubmit={salvar}>
                 <h1>Meu Perfil</h1>
 
+                <h5>Username</h5>
                 <input
                     name="username"
                     value={usuario.username ?? ""}
                     onChange={handleChange}
                     placeholder="Username"
+                    disabled
                 />
 
+                <h5>E-mail</h5>
+                <input
+                    
+                    name="email"
+                    value={usuario.email ?? ""}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    disabled
+                />
+
+                <h5>Nome</h5>
                 <input
                     name="nome"
                     value={usuario.nome ?? ""}
@@ -99,13 +114,9 @@ function Perfil() {
                     placeholder="Nome"
                 />
 
-                <input
-                    name="email"
-                    value={usuario.email ?? ""}
-                    onChange={handleChange}
-                    placeholder="Email"
-                />
 
+
+                <h5>Telefone</h5>
                 <input
                     name="telefone"
                     value={usuario.telefone ?? ""}
@@ -113,6 +124,7 @@ function Perfil() {
                     placeholder="Telefone"
                 />
 
+                <h5>Endereço</h5>
                 <input
                     name="endereco"
                     value={usuario.endereco ?? ""}
@@ -126,7 +138,9 @@ function Perfil() {
                     Voltar
                 </button>
 
-                {mensagem && <p>{mensagem}</p>}
+                <div className="mensagem">
+                    {mensagem && <p>{mensagem}</p>}
+                </div>
             </form>
         </div>
     );

@@ -22,7 +22,7 @@ function Header() {
         localStorage.removeItem("usuario");
         navigate("/");
     };
-
+    
     return (
         <>
             <header className="header">
@@ -38,7 +38,7 @@ function Header() {
                 <div className="actions">
                     
                     <button onClick={() => navigate("/perfil")}>
-                        {usuario.username}
+                        {usuario?.nome || usuario?.username || "Meu Perfil"}
                     </button>
 
                     <button onClick={logout}>
