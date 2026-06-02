@@ -34,6 +34,7 @@ function Login() {
             if (data.sucesso) {
                 navigate("/home");
             }
+            
         } catch (error) {
             setMensagem("Erro ao conectar ao servidor.");
         }

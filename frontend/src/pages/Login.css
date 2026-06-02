@@ -112,3 +112,46 @@ p {
 
     text-align: center;
 }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.modal {
+    width: 90%;
+    max-width: 400px;
+
+    background: #ffffff;
+    border-radius: 12px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+    color: #009f10;
+    margin-bottom: 10px;
+}
+
+.modal p {
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+.modal button {
+    width: 100%;
+    background: #009f10;
+    color: #ffffff;
+}

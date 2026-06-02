@@ -2,6 +2,7 @@ package br.unioeste.napirotas.service;
 
 import br.unioeste.napirotas.model.Usuario;
 import br.unioeste.napirotas.dto.LoginResponse;
+import br.unioeste.napirotas.dto.CadastroResponse;
 import br.unioeste.napirotas.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +74,42 @@ public class UsuarioService {
         }
 
         return repository.save(existente);
+    }
+
+    public CadastroResponse cadastrar(Usuario usuario) {
+
+        if (repository.existsByEmail(usuario.getEmail())) {
+            return new CadastroResponse(
+                    false,
+                    "E-mail já cadastrado.",
+                    null,
+                    null,
+                    null,
+                    null
+            );
+        }
+
+        if (repository.existsByUsername(usuario.getUsername())) {
+            return new CadastroResponse(
+                    false,
+                    "Usuário já cadastrado.",
+                    null,
+                    null,
+                    null,
+                    null
+            );
+        }
+
+        Usuario salvo = repository.save(usuario);
+
+        return new CadastroResponse(
+                true,
+                "Usuário cadastrado com sucesso.",
+                salvo.getId(),
+                salvo.getUsername(),
+                salvo.getNome(),
+                salvo.getEmail()
+        );
     }
 
     public void deletar(Long id) {

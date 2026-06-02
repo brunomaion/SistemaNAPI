@@ -10,6 +10,7 @@ function Cadastro() {
     const [telefone, setTelefone] = useState("");
     const [endereco, setEndereco] = useState("");
     const [mensagem, setMensagem] = useState("");
+    const [cadastroSucesso, setCadastroSucesso] = useState(false);
 
     const navigate = useNavigate();
 
@@ -39,11 +40,10 @@ function Cadastro() {
 
             setMensagem(data.mensagem);
 
-            if (response.ok) {
-                setTimeout(() => {
-                    navigate("/");
-                }, 1500);
+            if (data.sucesso) {
+                setCadastroSucesso(true);
             }
+
         } catch (error) {
             setMensagem("Erro ao conectar ao servidor.");
         }
@@ -51,13 +51,14 @@ function Cadastro() {
 
     return (
         <div className="container">
+
+            {/* FORMULÁRIO */}
             <form onSubmit={handleSubmit}>
                 <h1>Cadastro</h1>
 
                 <div>
                     <label>Usuário</label>
                     <input
-                        type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
@@ -65,9 +66,8 @@ function Cadastro() {
                 </div>
 
                 <div>
-                    <label>Nome Completo</label>
+                    <label>Nome</label>
                     <input
-                        type="text"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
                         required
@@ -75,9 +75,8 @@ function Cadastro() {
                 </div>
 
                 <div>
-                    <label>E-mail</label>
+                    <label>Email</label>
                     <input
-                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -97,7 +96,6 @@ function Cadastro() {
                 <div>
                     <label>Telefone</label>
                     <input
-                        type="text"
                         value={telefone}
                         onChange={(e) => setTelefone(e.target.value)}
                         required
@@ -107,16 +105,13 @@ function Cadastro() {
                 <div>
                     <label>Endereço</label>
                     <input
-                        type="text"
                         value={endereco}
                         onChange={(e) => setEndereco(e.target.value)}
                         required
                     />
                 </div>
 
-                <button type="submit">
-                    Cadastrar
-                </button>
+                <button type="submit">Cadastrar</button>
 
                 <button
                     type="button"
@@ -129,6 +124,22 @@ function Cadastro() {
                     {mensagem && <p>{mensagem}</p>}
                 </div>
             </form>
+
+            {/* POPUP DE SUCESSO */}
+            {cadastroSucesso && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>Cadastro realizado!</h2>
+
+                        <p>Usuário cadastrado com sucesso.</p>
+
+                        <button onClick={() => navigate("/")}>
+                            Voltar para Login
+                        </button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }

@@ -3,6 +3,7 @@ package br.unioeste.napirotas.controller;
 
 import br.unioeste.napirotas.dto.LoginRequest;
 import br.unioeste.napirotas.dto.LoginResponse;
+import br.unioeste.napirotas.dto.CadastroResponse;
 import br.unioeste.napirotas.model.Usuario;
 import br.unioeste.napirotas.service.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,8 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario criar(@RequestBody Usuario usuario) {
-        return service.salvar(usuario);
+    public CadastroResponse criar(@RequestBody Usuario usuario) {
+        return service.cadastrar(usuario);
     }
 
     @PutMapping("/{id}")
@@ -56,5 +57,5 @@ public class UsuarioController {
             request.username(),
             request.senha()
     );
-}
+    }
 }
