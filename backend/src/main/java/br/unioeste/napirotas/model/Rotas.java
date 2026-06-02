@@ -2,6 +2,7 @@ package br.unioeste.napirotas.model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import br.unioeste.napirotas.model.Ponto;
 
 @Entity
 @Table(name = "rotas")
@@ -17,16 +18,17 @@ public class Rotas {
     private String nomeRota;
 
     @ElementCollection
-    private List<String> pontoOrigem;
+    @CollectionTable(name = "rota_origem", joinColumns = @JoinColumn(name = "rota_id"))
+    private List<Ponto> pontoOrigem;
+
+    //@ElementCollection
+    //private List<String> pontos;
 
     @ElementCollection
-    private List<String> pontos;
-
-    /*@ElementCollection
     @CollectionTable(name = "rota_pontos", joinColumns = @JoinColumn(name = "rota_id"))
     private List<Ponto> pontos;
-    */
-   
+
+
     @ElementCollection
     private List<String> clusters;
 
@@ -41,9 +43,7 @@ public class Rotas {
     private float custoTotal;
     private float tempoTotal;
 
-    // =========================
-    // GETTERS E SETTERS
-    // =========================
+
 
     public Long getId() {
         return id;
@@ -69,19 +69,19 @@ public class Rotas {
         this.nomeRota = nomeRota;
     }
 
-    public List<String> getPontoOrigem() {
+    public List<Ponto> getPontoOrigem() {
         return pontoOrigem;
     }
 
-    public void setPontoOrigem(List<String> pontoOrigem) {
+    public void setPontoOrigem(List<Ponto> pontoOrigem) {
         this.pontoOrigem = pontoOrigem;
     }
 
-    public List<String> getPontos() {
+    public List<Ponto> getPontos() {
         return pontos;
     }
 
-    public void setPontos(List<String> pontos) {
+    public void setPontos(List<Ponto> pontos) {
         this.pontos = pontos;
     }
 
@@ -123,5 +123,9 @@ public class Rotas {
 
     public void setTempoTotal(float tempoTotal) {
         this.tempoTotal = tempoTotal;
+    }
+
+    public void addPonto(Ponto ponto) {
+        this.pontos.add(ponto);
     }
 }

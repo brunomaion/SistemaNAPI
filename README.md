@@ -29,6 +29,7 @@ git clone <repositorio>
 cd frontend
 npm install
 npm install react-router-dom
+npm install leaflet react-leaflet
 npm run dev
 ```
 

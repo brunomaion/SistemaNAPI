@@ -72,3 +72,90 @@
     background: #009f10;
     color: white;
 }
+
+
+
+.pontos-table {
+    margin-top: 20px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.pontos-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    background: #111;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.pontos-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    transition: 0.2s;
+}
+
+.pontos-row:hover {
+    background: #f9f9f9;
+}
+
+.pontos-row input {
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 95%;
+}
+
+.actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* BOTÕES */
+.actions button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* EDITAR */
+.actions button:first-child {
+    background: #009f10;
+    color: white;
+}
+
+/* EXCLUIR */
+.btn-danger {
+    background: #ff4c4c;
+    color: white;
+}
+
+/* PREVIEW MAPA */
+.btn-preview {
+    background: #333;
+    color: white;
+}
+
+.rota-info-header button {
+    margin-right: 12px;
+}
+
+.rota-info-header button:last-child {
+    margin-right: 0;
+}
+
+.mapa-mini {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+}
