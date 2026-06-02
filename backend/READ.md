@@ -74,7 +74,6 @@ Cadastra um novo usuário.
 }
 ```
 
-T
 #### Exemplo de resposta
 
 ```json
