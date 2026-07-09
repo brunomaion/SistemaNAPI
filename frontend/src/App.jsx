@@ -11,6 +11,7 @@ import RotaOtimizacao from "./pages/rota/RotaOtimizacao";
 import RotaConfiguracoes from "./pages/rota/RotaConfiguracoes";
 
 
+
 function App() {
     return (
         <BrowserRouter>

@@ -153,9 +153,19 @@
 .rota-info-header button:last-child {
     margin-right: 0;
 }
+.mapa-rota {
+    height: 500px;
+    width: 100%;
+    border-radius: 10px;
+}
 
-.mapa-mini {
-    margin-top: 20px;
-    border-radius: 12px;
-    overflow: hidden;
+.preview-mapa {
+    width: 100%;
+    margin: 10px 0 20px 0;
+}
+
+.preview-mapa .mapa-rota {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
 }

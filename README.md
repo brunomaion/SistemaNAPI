@@ -39,3 +39,6 @@ npm run dev
 #ffffff
 #000000
 #009f10
+
+# SQL
+

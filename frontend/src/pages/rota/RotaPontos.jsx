@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import HeaderRotas from "../../components/HeaderRotas";
+import MapaRota from "../../components/MapaRota";
 
 function RotaPontos() {
     const { id } = useParams();
-
+    const [previewIndex, setPreviewIndex] = useState(null);
+    const [previewVersion, setPreviewVersion] = useState(0);
     const [rota, setRota] = useState(null);
     const [editIndex, setEditIndex] = useState(null);
+    
 
     useEffect(() => {
         buscarRota();
@@ -131,111 +134,153 @@ function RotaPontos() {
 
     if (!rota) return <div>Carregando...</div>;
 
-    return (
-        <div className="rota-container">
-            <Header />
+return (
+    <div className="rota-container">
+        <Header />
 
-            <div className="home-content">
-                <HeaderRotas />
+        <div className="home-content">
+            <HeaderRotas />
 
-                <div className="rota-info">
+            <div className="rota-info">
+                <div className="rota-info-header">
+                    <button className="btn" onClick={adicionarPonto}>
+                        + Adicionar ponto
+                    </button>
 
-                    <div className="rota-info-header">
-                        <button className="btn" onClick={adicionarPonto}>
-                            + Adicionar ponto
-                        </button>
+                    <input
+                        type="file"
+                        accept=".csv"
+                        id="csvUpload"
+                        style={{ display: "none" }}
+                        onChange={carregarCSV}
+                    />
 
-                        <input
-                            type="file"
-                            accept=".csv"
-                            id="csvUpload"
-                            style={{ display: "none" }}
-                            onChange={carregarCSV}
-                        />
+                    <button
+                        className="btn"
+                        onClick={() =>
+                            document.getElementById("csvUpload").click()
+                        }
+                    >
+                        Carregar CSV
+                    </button>
+                </div>
 
-                        <button className="btn" onClick={() => document.getElementById("csvUpload").click()}>
-                            Carregar CSV
-                        </button>
+                <div className="pontos-table">
+                    <div className="pontos-header">
+                        <span>Nome</span>
+                        <span>Latitude</span>
+                        <span>Longitude</span>
+                        <span>Ações</span>
                     </div>
 
-                    <ul>
-                        <div className="pontos-table">
-                            <div className="pontos-header">
-                                <span>Nome</span>
-                                <span>Latitude</span>
-                                <span>Longitude</span>
-                                <span>Ações</span>
+                    {rota.pontos?.map((ponto, index) => (
+                        <div key={index}>
+                            <div className="pontos-row">
+                                {editIndex === index ? (
+                                    <>
+                                        <input
+                                            value={ponto.nome || ""}
+                                            onChange={(e) =>
+                                                atualizarPonto(
+                                                    index,
+                                                    "nome",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+
+                                        <input
+                                            value={ponto.lat || ""}
+                                            onChange={(e) =>
+                                                atualizarPonto(
+                                                    index,
+                                                    "lat",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+
+                                        <input
+                                            value={ponto.lng || ""}
+                                            onChange={(e) =>
+                                                atualizarPonto(
+                                                    index,
+                                                    "lng",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+
+                                        <div className="actions">
+                                            <button onClick={salvar}>
+                                                Salvar
+                                            </button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>{ponto.nome}</span>
+                                        <span>{ponto.lat}</span>
+                                        <span>{ponto.lng}</span>
+
+                                        <div className="actions">
+                                            <button
+                                                onClick={() =>
+                                                    setEditIndex(index)
+                                                }
+                                            >
+                                                Editar
+                                            </button>
+
+                                            <button
+                                                onClick={() =>
+                                                    removerPonto(index)
+                                                }
+                                                className="btn-danger"
+                                            >
+                                                Excluir
+                                            </button>
+
+                                            <button
+                                                className="btn-preview"
+                                                onClick={() => {
+                                                    if (previewIndex === index) {
+                                                        setPreviewIndex(null);
+                                                        return;
+                                                    }
+
+                                                    setPreviewIndex(index);
+                                                    setPreviewVersion(v => v + 1);
+                                                }}
+                                            >
+                                                {previewIndex === index ? "Ocultar" : "Preview"}
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
                             </div>
 
-                            {rota.pontos?.map((ponto, index) => (
-                                <div className="pontos-row" key={index}>
-                                    {editIndex === index ? (
-                                        <>
-                                            <input
-                                                value={ponto.nome || ""}
-                                                onChange={(e) =>
-                                                    atualizarPonto(index, "nome", e.target.value)
-                                                }
-                                            />
-
-                                            <input
-                                                value={ponto.lat || ""}
-                                                onChange={(e) =>
-                                                    atualizarPonto(index, "lat", e.target.value)
-                                                }
-                                            />
-
-                                            <input
-                                                value={ponto.lng || ""}
-                                                onChange={(e) =>
-                                                    atualizarPonto(index, "lng", e.target.value)
-                                                }
-                                            />
-
-                                            <div className="actions">
-                                                <button onClick={salvar}>Salvar</button>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span>{ponto.nome}</span>
-                                            <span>{ponto.lat}</span>
-                                            <span>{ponto.lng}</span>
-
-                                            <div className="actions">
-                                                <button onClick={() => setEditIndex(index)}>
-                                                    Editar
-                                                </button>
-
-                                                <button
-                                                    onClick={() => removerPonto(index)}
-                                                    className="btn-danger"
-                                                >
-                                                    Excluir
-                                                </button>
-
-                                                <button
-                                                    className="btn-preview"
-                                                    onClick={() =>
-                                                        window.open(
-                                                            `https://www.openstreetmap.org/?mlat=${ponto.lat}&mlon=${ponto.lng}#map=16/${ponto.lat}/${ponto.lng}`,
-                                                            "_blank"
-                                                        )
-                                                    }
-                                                >
-                                                    Preview
-                                                </button>
-                                            </div>
-                                        </>
-                                    )}
+                            {previewIndex === index && (
+                                <div className="preview-mapa">
+                                <MapaRota
+                                    key={`${index}-${previewVersion}`}
+                                    pontos={[
+                                        {
+                                            nome: ponto.nome,
+                                            lat: Number(ponto.lat),
+                                            lng: Number(ponto.lng)
+                                        }
+                                    ]}
+                                />
                                 </div>
-                            ))}
+                            )}
                         </div>
-                    </ul>
+                    ))}
                 </div>
             </div>
         </div>
-    );
+    </div>
+);
 }
 
 export default RotaPontos;
