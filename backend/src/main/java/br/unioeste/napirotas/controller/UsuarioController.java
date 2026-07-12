@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200", "http://localhost:5173"})
 public class UsuarioController {
 
     private final UsuarioService service;
