@@ -1,0 +1,60 @@
+.coletas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+}
+
+.coleta-title {
+    justify-content: center;
+}
+
+.coleta-title h1 {
+    margin: 0;
+    color: #222;
+    font-size: 24px;
+}
+
+.coleta-link {
+    text-decoration: none;
+    color: #222;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.coleta-link:hover {
+    background: rgba(0, 159, 16, 0.1);
+}
+
+.coleta-link.active {
+    background: #009f10;
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .coletas-header {
+        gap: 6px;
+        padding: 12px;
+        overflow-x: auto;
+    }
+
+    .coleta-title {
+        justify-content: flex-start;
+    }
+
+    .coleta-title h1 {
+        font-size: 20px;
+    }
+
+    .coleta-link {
+        flex: 0 0 auto;
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}

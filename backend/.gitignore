@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+backend/.vscode/
+
+frontend/.vscode/
+frontend/node_modules/
+frontend/package-lock.json
+frontend/yarn.lock

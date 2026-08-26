@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
-import HeaderRotas from "../../components/HeaderRotas";
-import ".././Rota.css";
+import HeaderColetas from "../../components/HeaderColetas";
 
-function RotaOtimizacao() {
+
+function RotaClusters() {
     const { id } = useParams();
 
     return (
@@ -11,7 +11,7 @@ function RotaOtimizacao() {
             <Header />
 
             <div className="home-content">
-                <HeaderRotas />
+                <HeaderColetas />
 
                 <div className="rota-info">
                     <h1>Clusters</h1>
@@ -22,4 +22,4 @@ function RotaOtimizacao() {
     );
 }
 
-export default RotaOtimizacao;
+export default RotaClusters;

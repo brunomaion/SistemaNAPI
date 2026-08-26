@@ -1,31 +1,34 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Home from "./pages/Home";
 import Perfil from "./pages/Perfil";
 import Gerenciar from "./pages/GerenciarUsuarios";
-import Rota from "./pages/Rota";
-import RotaPontos from "./pages/rota/RotaPontos";
-import RotaClusters from "./pages/rota/RotaClusters";
-import RotaOtimizacao from "./pages/rota/RotaOtimizacao";
-import RotaConfiguracoes from "./pages/rota/RotaConfiguracoes";
 
-
+import Coleta from "./pages/Coleta";
+import ColetaPontos from "./pages/Coleta/ColetaPontos";
+import ColetaClusters from "./pages/Coleta/ColetaClusters";
+import ColetaOtimizacao from "./pages/Coleta/ColetaOtimizacao";
+import ColetaConfiguracoes from "./pages/Coleta/ColetaConfiguracoes";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
+
                 <Route path="/" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/perfil" element={<Perfil />} />
                 <Route path="/gerenciarusuarios" element={<Gerenciar />} />
-                <Route path="/rota/:id" element={<Rota />} />
-                <Route path="/rota/:id/pontos" element={<RotaPontos />} />
-                <Route path="/rota/:id/clusters" element={<RotaClusters />} />
-                <Route path="/rota/:id/otimizacao" element={<RotaOtimizacao />} />
-                <Route path="/rota/:id/configuracoes" element={<RotaConfiguracoes />} />
+
+                <Route path="/coleta/:id" element={<Coleta />} />
+                <Route path="/coleta/:id/pontos" element={<ColetaPontos />} />
+                <Route path="/coleta/:id/clusters" element={<ColetaClusters />} />
+                <Route path="/coleta/:id/otimizacao" element={<ColetaOtimizacao />} />
+                <Route path="/coleta/:id/configuracoes" element={<ColetaConfiguracoes />} />
+
             </Routes>
         </BrowserRouter>
     );

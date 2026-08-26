@@ -1,96 +1,115 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
-import HeaderRotas from "../../components/HeaderRotas";
+import HeaderColetas from "../../components/HeaderColetas";
 import MapaRota from "../../components/MapaRota";
+import "../Coleta.css";
 
-function RotaPontos() {
+
+function ColetaPontos() {
     const { id } = useParams();
     const [previewIndex, setPreviewIndex] = useState(null);
     const [previewVersion, setPreviewVersion] = useState(0);
-    const [rota, setRota] = useState(null);
+    const [coleta, setColeta] = useState(null);
     const [editIndex, setEditIndex] = useState(null);
     
 
     useEffect(() => {
-        buscarRota();
-    }, []);
-
-    const buscarRota = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/rotas/${id}`);
-            const data = await response.json();
-            setRota(data);
-        } catch (err) {
-            console.log("Erro ao buscar rota", err);
+        async function carregarColeta() {
+            try {
+                const response = await fetch(`http://localhost:8080/coletas/${id}`);
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar coleta");
+                }
+                setColeta(await response.json());
+            } catch (err) {
+                console.log("Erro ao buscar Coleta", err);
+            }
         }
-    };
 
-    const salvarRota = async (rotaAtualizada) => {
+        if (id) carregarColeta();
+    }, [id]);
+
+    const salvarColeta = async (coletaAtualizada) => {
         try {
-            await fetch(`http://localhost:8080/rotas/${id}`, {
+            const response = await fetch(`http://localhost:8080/coletas/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(rotaAtualizada)
+                body: JSON.stringify(coletaAtualizada)
             });
 
-            buscarRota();
+            if (!response.ok) {
+                throw new Error("Erro ao salvar coleta");
+            }
+
+            const responseAtualizado = await fetch(`http://localhost:8080/coletas/${id}`);
+            if (!responseAtualizado.ok) {
+                throw new Error("Erro ao carregar coleta atualizada");
+            }
+            setColeta(await responseAtualizado.json());
         } catch (err) {
-            console.log("Erro ao salvar rota", err);
+            console.log("Erro ao salvar Coleta", err);
         }
     };
 
     const adicionarPonto = () => {
         const novosPontos = [
-            ...rota.pontos,
+            ...(coleta.pontos || []),
             {
                 nome: "",
-                lat: "",
-                lng: ""
+                latitude: "",
+                longitude: ""
             }
         ];
 
-        const rotaAtualizada = {
-            ...rota,
+        const ColetaAtualizada = {
+            ...coleta,
             pontos: novosPontos
         };
 
-        setRota(rotaAtualizada);
+        setColeta(ColetaAtualizada);
         setEditIndex(novosPontos.length - 1);
     };
 
     const atualizarPonto = (index, field, value) => {
-        const novosPontos = [...rota.pontos];
+        const novosPontos = [...(coleta.pontos || [])];
 
         novosPontos[index] = {
             ...novosPontos[index],
             [field]: value
         };
 
-        setRota({
-            ...rota,
+        setColeta({
+            ...coleta,
             pontos: novosPontos
         });
     };
 
     const salvar = () => {
-        salvarRota(rota);
+        salvarColeta(coleta);
         setEditIndex(null);
     };
 
 
     const removerPonto = (index) => {
-        const novosPontos = rota.pontos.filter((_, i) => i !== index);
+        const novosPontos = (coleta.pontos || []).filter((_, i) => i !== index);
+        const novosGrupos = (coleta.grupos || []).map((grupo) => ({
+            ...grupo,
+            pontos: (grupo.pontos || [])
+                .filter((pontoIndex) => pontoIndex !== index)
+                .map((pontoIndex) => pontoIndex > index ? pontoIndex - 1 : pontoIndex)
+        }));
 
-        const rotaAtualizada = {
-            ...rota,
-            pontos: novosPontos
+        const ColetaAtualizada = {
+            ...coleta,
+            pontos: novosPontos,
+            grupos: novosGrupos
         };
 
-        setRota(rotaAtualizada);
-        salvarRota(rotaAtualizada);
+        setColeta(ColetaAtualizada);
+        salvarColeta(ColetaAtualizada);
 
         setEditIndex(null);
     };
@@ -110,39 +129,41 @@ function RotaPontos() {
             const novosPontos = linhas.map((linha) => {
                 const separador = linha.includes(";") ? ";" : ",";
 
-                const [nome, lat, lng] = linha.split(separador).map(v => v.trim());
+                const [nome, latitude, longitude] = linha
+                    .split(separador)
+                    .map(v => v.trim());
 
                 return {
                     nome: nome || "",
-                    lat: lat || "",
-                    lng: lng || ""
+                    latitude: latitude || "",
+                    longitude: longitude || ""
                 };
             });
 
-            const rotaAtualizada = {
-                ...rota,
-                pontos: [...(rota.pontos || []), ...novosPontos]
+            const ColetaAtualizada = {
+                ...coleta,
+                pontos: [...(coleta.pontos || []), ...novosPontos]
             };
 
-            setRota(rotaAtualizada);
-            salvarRota(rotaAtualizada);
+            setColeta(ColetaAtualizada);
+            salvarColeta(ColetaAtualizada);
         };
 
         reader.readAsText(file);
     };
         
 
-    if (!rota) return <div>Carregando...</div>;
+    if (!coleta) return <div>Carregando...</div>;
 
 return (
-    <div className="rota-container">
+    <div className="coleta-container">
         <Header />
 
-        <div className="home-content">
-            <HeaderRotas />
+        <div className="coleta-content">
+            <HeaderColetas />
 
-            <div className="rota-info">
-                <div className="rota-info-header">
+            <div className="coleta-info pontos-info">
+                <div className="coleta-info-header">
                     <button className="btn" onClick={adicionarPonto}>
                         + Adicionar ponto
                     </button>
@@ -173,7 +194,7 @@ return (
                         <span>Ações</span>
                     </div>
 
-                    {rota.pontos?.map((ponto, index) => (
+                    {coleta.pontos?.map((ponto, index) => (
                         <div key={index}>
                             <div className="pontos-row">
                                 {editIndex === index ? (
@@ -190,22 +211,22 @@ return (
                                         />
 
                                         <input
-                                            value={ponto.lat || ""}
+                                            value={ponto.latitude ?? ""}
                                             onChange={(e) =>
                                                 atualizarPonto(
                                                     index,
-                                                    "lat",
+                                                    "latitude",
                                                     e.target.value
                                                 )
                                             }
                                         />
 
                                         <input
-                                            value={ponto.lng || ""}
+                                            value={ponto.longitude ?? ""}
                                             onChange={(e) =>
                                                 atualizarPonto(
                                                     index,
-                                                    "lng",
+                                                    "longitude",
                                                     e.target.value
                                                 )
                                             }
@@ -220,8 +241,8 @@ return (
                                 ) : (
                                     <>
                                         <span>{ponto.nome}</span>
-                                        <span>{ponto.lat}</span>
-                                        <span>{ponto.lng}</span>
+                                        <span>{ponto.latitude}</span>
+                                        <span>{ponto.longitude}</span>
 
                                         <div className="actions">
                                             <button
@@ -267,8 +288,8 @@ return (
                                     pontos={[
                                         {
                                             nome: ponto.nome,
-                                            lat: Number(ponto.lat),
-                                            lng: Number(ponto.lng)
+                                            lat: Number(ponto.latitude),
+                                            lng: Number(ponto.longitude)
                                         }
                                     ]}
                                 />
@@ -283,4 +304,4 @@ return (
 );
 }
 
-export default RotaPontos;
+export default ColetaPontos;
