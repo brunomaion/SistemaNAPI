@@ -1,10 +1,18 @@
-GET     /regioes
-GET     /regioes/1
-POST    /regioes
-PUT     /regioes/1
-DELETE  /regioes/1
+REGIÕES
 
-GET     /regioes/1/pontos
-POST    /regioes/1/pontos
-PUT     /regioes/1/pontos/5
-DELETE  /regioes/1/pontos/5
+GET  /regioes
+GET  /regioes/1
+POST /regioes
+
+
+PONTOS DE UMA REGIÃO
+
+GET  /regioes/1/pontos
+POST /regioes/1/pontos
+
+
+PONTO ESPECÍFICO
+
+GET    /pontos/1
+PUT    /pontos/1
+DELETE /pontos/1

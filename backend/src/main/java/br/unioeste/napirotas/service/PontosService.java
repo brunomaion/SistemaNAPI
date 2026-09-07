@@ -35,14 +35,18 @@ public class PontosService {
         return pontosRepository.findByRegiaoId(regiaoId);
     }
 
-    public Pontos salvar(Pontos ponto, Long regiaoId) {
+    public List<Pontos> salvar(
+            List<Pontos> pontos,
+            Long regiaoId) {
 
         Regiao regiao = regiaoRepository.findById(regiaoId)
                 .orElseThrow(() -> new RuntimeException("Região não encontrada"));
 
-        ponto.setRegiao(regiao);
+        for (Pontos ponto : pontos) {
+            ponto.setRegiao(regiao);
+        }
 
-        return pontosRepository.save(ponto);
+        return pontosRepository.saveAll(pontos);
     }
 
     public Pontos atualizar(Long id, Pontos ponto, Long regiaoId) {

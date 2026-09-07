@@ -36,16 +36,6 @@ public class PontosController {
         );
     }
 
-    @PostMapping("/{regiaoId}/pontos")
-    public ResponseEntity<Pontos> salvar(
-            @PathVariable Long regiaoId,
-            @RequestBody Pontos ponto) {
-
-        return ResponseEntity.ok(
-                pontosService.salvar(ponto, regiaoId)
-        );
-    }
-
     @PutMapping("/{regiaoId}/pontos/{pontoId}")
     public ResponseEntity<Pontos> atualizar(
             @PathVariable Long regiaoId,
@@ -65,5 +55,16 @@ public class PontosController {
         pontosService.deletar(pontoId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    // LISTA DE PONTOS
+    @PostMapping("/{regiaoId}/pontos")
+    public ResponseEntity<List<Pontos>> salvar(
+            @PathVariable Long regiaoId,
+            @RequestBody List<Pontos> pontos) {
+
+        return ResponseEntity.ok(
+                pontosService.salvar(pontos, regiaoId)
+        );
     }
 }
