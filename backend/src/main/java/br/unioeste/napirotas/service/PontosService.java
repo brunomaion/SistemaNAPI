@@ -4,68 +4,130 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.unioeste.napirotas.model.Grupo;
 import br.unioeste.napirotas.model.Pontos;
-import br.unioeste.napirotas.model.Regiao;
+import br.unioeste.napirotas.repository.GrupoRepository;
 import br.unioeste.napirotas.repository.PontosRepository;
-import br.unioeste.napirotas.repository.RegiaoRepository;
 
 @Service
 public class PontosService {
 
     private final PontosRepository pontosRepository;
-    private final RegiaoRepository regiaoRepository;
+    private final GrupoRepository grupoRepository;
 
     public PontosService(
             PontosRepository pontosRepository,
-            RegiaoRepository regiaoRepository) {
+            GrupoRepository grupoRepository) {
         this.pontosRepository = pontosRepository;
-        this.regiaoRepository = regiaoRepository;
+        this.grupoRepository = grupoRepository;
     }
 
-    public List<Pontos> listarTodos() {
-        return pontosRepository.findAll();
+    public List<Pontos> listarPorGrupo(
+            Long regiaoId,
+            Long grupoId) {
+
+        Grupo grupo = buscarGrupo(regiaoId, grupoId);
+
+        return pontosRepository.findByGrupoId(grupo.getId());
     }
 
-    public Pontos buscarPorId(Long id) {
-        return pontosRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ponto não encontrado"));
-    }
+    public Pontos buscarPorId(
+            Long regiaoId,
+            Long grupoId,
+            Long pontoId) {
 
-    public List<Pontos> listarPorRegiao(Long regiaoId) {
-        return pontosRepository.findByRegiaoId(regiaoId);
+        Grupo grupo = buscarGrupo(regiaoId, grupoId);
+
+        Pontos ponto = pontosRepository.findById(pontoId)
+                .orElseThrow(() -> new RuntimeException(
+                        "Ponto não encontrado"));
+
+        if (!ponto.getGrupo().getId().equals(grupo.getId())) {
+            throw new RuntimeException(
+                    "O ponto não pertence ao grupo informado");
+        }
+
+        return ponto;
     }
 
     public List<Pontos> salvar(
-            List<Pontos> pontos,
-            Long regiaoId) {
+            Long regiaoId,
+            Long grupoId,
+            List<Pontos> pontos) {
 
-        Regiao regiao = regiaoRepository.findById(regiaoId)
-                .orElseThrow(() -> new RuntimeException("Região não encontrada"));
+        Grupo grupo = buscarGrupo(regiaoId, grupoId);
 
         for (Pontos ponto : pontos) {
-            ponto.setRegiao(regiao);
+            ponto.setGrupo(grupo);
         }
 
         return pontosRepository.saveAll(pontos);
     }
 
-    public Pontos atualizar(Long id, Pontos ponto, Long regiaoId) {
+    public Pontos atualizar(
+            Long regiaoId,
+            Long grupoId,
+            Long pontoId,
+            Pontos dados) {
 
-        Pontos pontoExistente = buscarPorId(id);
+        Pontos ponto = buscarPorId(
+                regiaoId,
+                grupoId,
+                pontoId);
 
-        Regiao regiao = regiaoRepository.findById(regiaoId)
-                .orElseThrow(() -> new RuntimeException("Região não encontrada"));
+        ponto.setNomePonto(dados.getNomePonto());
+        ponto.setLatitude(dados.getLatitude());
+        ponto.setLongitude(dados.getLongitude());
 
-        pontoExistente.setNomePonto(ponto.getNomePonto());
-        pontoExistente.setLatitude(ponto.getLatitude());
-        pontoExistente.setLongitude(ponto.getLongitude());
-        pontoExistente.setRegiao(regiao);
-
-        return pontosRepository.save(pontoExistente);
+        return pontosRepository.save(ponto);
     }
 
-    public void deletar(Long id) {
-        Pontos ponto = buscarPorId(id);
+    public Pontos moverGrupo(
+            Long regiaoId,
+            Long grupoId,
+            Long pontoId,
+            Long novoGrupoId) {
+
+        Pontos ponto = buscarPorId(
+                regiaoId,
+                grupoId,
+                pontoId);
+
+        Grupo novoGrupo = buscarGrupo(
+                regiaoId,
+                novoGrupoId);
+
+        ponto.setGrupo(novoGrupo);
+
+        return pontosRepository.save(ponto);
+    }
+
+    public void deletar(
+            Long regiaoId,
+            Long grupoId,
+            Long pontoId) {
+
+        Pontos ponto = buscarPorId(
+                regiaoId,
+                grupoId,
+                pontoId);
+
         pontosRepository.delete(ponto);
+    }
+
+    private Grupo buscarGrupo(
+            Long regiaoId,
+            Long grupoId) {
+
+        Grupo grupo = grupoRepository.findById(grupoId)
+                .orElseThrow(() -> new RuntimeException(
+                        "Grupo não encontrado"));
+
+        if (!grupo.getRegiao().getId().equals(regiaoId)) {
+            throw new RuntimeException(
+                    "O grupo não pertence à região informada");
+        }
+
+        return grupo;
     }
 }

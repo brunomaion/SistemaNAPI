@@ -30,13 +30,14 @@ public class RegiaoService {
     }
 
     public Regiao atualizar(Long id, Regiao regiao) {
-        Regiao regiaoExistente = buscarPorId(id);
 
-        regiaoExistente.setNomeRegiao(regiao.getNomeRegiao());
-        regiaoExistente.setDataInicio(regiao.getDataInicio());
-        regiaoExistente.setDataFim(regiao.getDataFim());
+        Regiao existente = buscarPorId(id);
 
-        return regiaoRepository.save(regiaoExistente);
+        existente.setNomeRegiao(regiao.getNomeRegiao());
+        existente.setDataInicio(regiao.getDataInicio());
+        existente.setDataFim(regiao.getDataFim());
+
+        return regiaoRepository.save(existente);
     }
 
     public void deletar(Long id) {

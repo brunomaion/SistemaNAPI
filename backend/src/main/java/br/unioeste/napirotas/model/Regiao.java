@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,11 +34,11 @@ public class Regiao {
 
     private LocalDate dataFim;
 
-    @OneToMany(mappedBy = "regiao", cascade = CascadeType.ALL)
-    private List<Pontos> pontos = new ArrayList<>();
-
-    // Se quiser manter os grupos
-    // @JdbcTypeCode(SqlTypes.JSON)
-    // @Column(columnDefinition = "json")
-    // private List<Grupo> grupos = new ArrayList<>();
+    @OneToMany(
+        mappedBy = "regiao",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<Grupo> grupos = new ArrayList<>();
 }

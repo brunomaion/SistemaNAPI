@@ -3,21 +3,13 @@ package br.unioeste.napirotas.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.unioeste.napirotas.model.Pontos;
 import br.unioeste.napirotas.service.PontosService;
 
 @RestController
-@RequestMapping("/regioes")
+@RequestMapping("/regioes/{regiaoId}/grupos/{grupoId}/pontos")
 @CrossOrigin(origins = "http://localhost:5173")
 public class PontosController {
 
@@ -27,44 +19,84 @@ public class PontosController {
         this.pontosService = pontosService;
     }
 
-    @GetMapping("/{regiaoId}/pontos")
-    public ResponseEntity<List<Pontos>> listarPorRegiao(
-            @PathVariable Long regiaoId) {
+    @GetMapping
+    public ResponseEntity<List<Pontos>> listar(
+            @PathVariable Long regiaoId,
+            @PathVariable Long grupoId) {
 
         return ResponseEntity.ok(
-                pontosService.listarPorRegiao(regiaoId)
-        );
+                pontosService.listarPorGrupo(
+                        regiaoId,
+                        grupoId));
     }
 
-    @PutMapping("/{regiaoId}/pontos/{pontoId}")
-    public ResponseEntity<Pontos> atualizar(
+    @GetMapping("/{pontoId}")
+    public ResponseEntity<Pontos> buscarPorId(
             @PathVariable Long regiaoId,
-            @PathVariable Long pontoId,
-            @RequestBody Pontos ponto) {
-
-        return ResponseEntity.ok(
-                pontosService.atualizar(pontoId, ponto, regiaoId)
-        );
-    }
-
-    @DeleteMapping("/{regiaoId}/pontos/{pontoId}")
-    public ResponseEntity<Void> deletar(
-            @PathVariable Long regiaoId,
+            @PathVariable Long grupoId,
             @PathVariable Long pontoId) {
 
-        pontosService.deletar(pontoId);
-
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(
+                pontosService.buscarPorId(
+                        regiaoId,
+                        grupoId,
+                        pontoId));
     }
 
-    // LISTA DE PONTOS
-    @PostMapping("/{regiaoId}/pontos")
+    @PostMapping
     public ResponseEntity<List<Pontos>> salvar(
             @PathVariable Long regiaoId,
+            @PathVariable Long grupoId,
             @RequestBody List<Pontos> pontos) {
 
         return ResponseEntity.ok(
-                pontosService.salvar(pontos, regiaoId)
-        );
+                pontosService.salvar(
+                        regiaoId,
+                        grupoId,
+                        pontos));
+    }
+
+    @PutMapping("/{pontoId}")
+    public ResponseEntity<Pontos> atualizar(
+            @PathVariable Long regiaoId,
+            @PathVariable Long grupoId,
+            @PathVariable Long pontoId,
+            @RequestBody Pontos dados) {
+
+        return ResponseEntity.ok(
+                pontosService.atualizar(
+                        regiaoId,
+                        grupoId,
+                        pontoId,
+                        dados));
+    }
+
+    @PutMapping("/{pontoId}/grupo/{novoGrupoId}")
+    public ResponseEntity<Pontos> moverGrupo(
+            @PathVariable Long regiaoId,
+            @PathVariable Long grupoId,
+            @PathVariable Long pontoId,
+            @PathVariable Long novoGrupoId) {
+
+        return ResponseEntity.ok(
+                pontosService.moverGrupo(
+                        regiaoId,
+                        grupoId,
+                        pontoId,
+                        novoGrupoId));
+    }
+
+    @DeleteMapping("/{pontoId}")
+    public ResponseEntity<Void> deletar(
+            @PathVariable Long regiaoId,
+            @PathVariable Long grupoId,
+            @PathVariable Long pontoId) {
+
+        pontosService.deletar(
+                regiaoId,
+                grupoId,
+                pontoId);
+
+        return ResponseEntity.noContent().build();
     }
 }

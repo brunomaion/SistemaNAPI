@@ -8,6 +8,7 @@ import br.unioeste.napirotas.model.Pontos;
 
 public interface PontosRepository extends JpaRepository<Pontos, Long> {
 
-    List<Pontos> findByRegiaoId(Long regiaoId);
+    List<Pontos> findByGrupoId(Long grupoId);
 
+    List<Pontos> findByGrupoRegiaoId(Long regiaoId);
 }
