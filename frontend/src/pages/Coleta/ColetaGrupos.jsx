@@ -1,25 +1,28 @@
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import HeaderColetas from "../../components/HeaderColetas";
+import "./Coleta.css";
 
 
-function RotaClusters() {
+function ColetaGrupos() {
     const { id } = useParams();
 
     return (
-        <div className="rota-container">
+        <div className="coleta-subcontainer">
             <Header />
 
-            <div className="home-content">
+            <div className="coleta-content">
                 <HeaderColetas />
 
-                <div className="rota-info">
-                    <h1>Clusters</h1>
-                    <p>Rota ID: {id}</p>
+                <div className="coleta-subcontainer">
+                    
+
+
                 </div>
+
             </div>
         </div>
     );
 }
 
-export default RotaClusters;
+export default ColetaGrupos;

@@ -29,7 +29,7 @@
 }
 
 .btn-refresh {
-    background: #2e7d32; /* verde */
+    background: #009f10;
     border: none;
     color: white;
     padding: 10px 14px;
@@ -40,7 +40,7 @@
 }
 
 .btn-refresh:hover {
-    background: #1b5e20;
+    background: #000000;
     transform: scale(1.03);
 }
 
@@ -115,12 +115,12 @@
 }
 
 .btn-edit:hover {
-    background: #007a0c;
+    background: #000000;
 }
 
 /* EXCLUIR (vermelho claro como você pediu antes) */
 .btn-delete {
-    background: #ff6b6b;
+    background: #000000;
     border: none;
     color: white;
     padding: 6px 10px;
@@ -130,7 +130,7 @@
 }
 
 .btn-delete:hover {
-    background: #ff4c4c;
+    background: #009f10;
 }
 
 .mensagem_container {
@@ -199,7 +199,9 @@
 }
 
 .modal button:first-child {
-    background: #ccc;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
 }
 
 

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import HeaderColetas from "../../components/HeaderColetas";
 import MapaRota from "../../components/MapaRota";
-import "../Coleta.css";
+import "./Coleta.css";
 
 
 function ColetaPontos() {
@@ -162,7 +162,8 @@ return (
         <div className="coleta-content">
             <HeaderColetas />
 
-            <div className="coleta-info pontos-info">
+            <div className="coleta-subcontainer">
+                <div className="coleta-info pontos-info">
                 <div className="coleta-info-header">
                     <button className="btn" onClick={adicionarPonto}>
                         + Adicionar ponto
@@ -298,6 +299,7 @@ return (
                         </div>
                     ))}
                 </div>
+            </div>
             </div>
         </div>
     </div>

@@ -5,63 +5,166 @@
 }
 
 .home-content {
-    padding: 100px 40px 40px 40px;
+    width: 100%;
     max-width: 1200px;
-    margin: auto;
+    margin: 0 auto;
+    padding: 100px 40px 40px 40px;
+    box-sizing: border-box;
 }
 
-/* HEADER DA SEÇÃO */
-.home-header {
-    display: flex;
-    justify-content: space-between; /* ESQUERDA x DIREITA */
-    align-items: center;
-    margin-top: 25px;
-    margin-bottom: 20px;
+.home-content > h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
 }
 
-/* TÍTULO */
-.home-header h2 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 700;
-    color: #222;
+.home-content > h2 {
+    margin: 32px 0 16px;
 }
 
-/* BOTÕES À DIREITA */
-.home-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.btn {
+.btn-add {
     border: none;
     padding: 10px 14px;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 500;
-    transition: 0.2s;
-    color: white;
     font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background: #009f10;
+    transition: 0.2s;
 }
 
-/* hover padrão */
-.btn:hover {
+.btn-add:hover {
     transform: scale(1.03);
     opacity: 0.9;
 }
 
+.formulario-coleta {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 20px 0;
+    padding: 20px;
+    box-sizing: border-box;
+    background: white;
+    border: 1px solid #e1e5e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-coleta form {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.formulario-coleta h2 {
+    margin: 0 0 20px;
+    font-size: 20px;
+}
+
+
+
+.campo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.campo label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.campo input {
+    display: block;
+    width: 100%;
+    max-width: none;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccd2d7;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.botoes-formulario {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-salvar,
+.btn-cancelar {
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.btn-salvar {
+    color: white;
+    background: #009f10;
+}
+
+.btn-cancelar {
+    color: #000000;
+    background: #ff0000;
+    border: 1px solid #000000;
+}
+
+
 .coletas-containers {
-    background: #ac5656;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
 }
 
 .coleta-card {
+    width: 100%;
+    box-sizing: border-box;
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border: 1px solid #e1e5e8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.2s;
 }
 
+.coleta-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.coleta-card h2 {
+    margin: 0 0 14px;
+    font-size: 20px;
+}
+
+.coleta-card p {
+    margin: 7px 0;
+    color: #555;
+}
+
+@media (max-width: 700px) {
+    .home-content {
+        padding: 90px 20px 30px;
+    }
+
+    .botoes-formulario {
+        flex-direction: column;
+    }
+
+    .btn-salvar,
+    .btn-cancelar {
+        width: 100%;
+    }
+}

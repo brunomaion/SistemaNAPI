@@ -8,7 +8,7 @@ import Gerenciar from "./pages/GerenciarUsuarios";
 
 import Coleta from "./pages/Coleta";
 import ColetaPontos from "./pages/Coleta/ColetaPontos";
-import ColetaClusters from "./pages/Coleta/ColetaClusters";
+import ColetaGrupos from "./pages/Coleta/ColetaGrupos";
 import ColetaOtimizacao from "./pages/Coleta/ColetaOtimizacao";
 import ColetaConfiguracoes from "./pages/Coleta/ColetaConfiguracoes";
 
@@ -25,7 +25,7 @@ function App() {
 
                 <Route path="/coleta/:id" element={<Coleta />} />
                 <Route path="/coleta/:id/pontos" element={<ColetaPontos />} />
-                <Route path="/coleta/:id/clusters" element={<ColetaClusters />} />
+                <Route path="/coleta/:id/grupos" element={<ColetaGrupos />} />
                 <Route path="/coleta/:id/otimizacao" element={<ColetaOtimizacao />} />
                 <Route path="/coleta/:id/configuracoes" element={<ColetaConfiguracoes />} />
 

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import HeaderColetas from "../../components/HeaderColetas";
-import ".././Coleta.css";
+import "./Coleta.css";
 
 function ColetaOtimizacao() {
     const { id } = useParams();
@@ -10,13 +10,16 @@ function ColetaOtimizacao() {
         <div className="Coleta-container">
             <Header />
 
-            <div className="home-content">
+            <div className="coleta-content">
                 <HeaderColetas />
 
-                <div className="Coleta-info">
-                    <h1>Clusters</h1>
-                    <p>Coleta ID: {id}</p>
+                <div className="coleta-subcontainer">
+                    <div className="Coleta-info">
+                        <h1>Clusters</h1>
+                        <p>Coleta ID: {id}</p>
+                    </div>
                 </div>
+
             </div>
         </div>
     );

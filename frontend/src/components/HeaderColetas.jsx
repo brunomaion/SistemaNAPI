@@ -64,10 +64,10 @@ function HeaderColetas() {
                 </NavLink>
 
                 <NavLink
-                    to={`/coleta/${id}/clusters`}
+                    to={`/coleta/${id}/grupos`}
                     className="coleta-link"
                 >
-                    Clusters
+                    Grupos
                 </NavLink>
 
                 <NavLink

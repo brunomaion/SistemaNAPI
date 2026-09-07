@@ -15,13 +15,13 @@
 
 .coleta-title h1 {
     margin: 0;
-    color: #222;
+    color: #000000;
     font-size: 24px;
 }
 
 .coleta-link {
     text-decoration: none;
-    color: #222;
+    color: #000000;
     padding: 10px 15px;
     border-radius: 8px;
     font-weight: 500;
@@ -34,7 +34,7 @@
 
 .coleta-link.active {
     background: #009f10;
-    color: white;
+    color: #ffffff;
 }
 
 @media (max-width: 700px) {
