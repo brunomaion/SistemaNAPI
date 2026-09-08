@@ -28,6 +28,8 @@ function RegiaoGrupos() {
     const [excluirPontosJunto, setExcluirPontosJunto] = useState(false);
     const [mensagem, setMensagem] = useState("");
     const [editandoPontoId, setEditandoPontoId] = useState(null);
+    const [previewPontoId, setPreviewPontoId] = useState(null);
+    const [previewVersion, setPreviewVersion] = useState(0);
     const [grupoDestinoId, setGrupoDestinoId] = useState(null);
     const [modalAdicionarPonto, setModalAdicionarPonto] = useState(false);
     const [novoPonto, setNovoPonto] = useState({
@@ -515,7 +517,8 @@ function RegiaoGrupos() {
                                             </div>
 
                                             {(pontosPorGrupo[grupo.id] || []).map((ponto) => (
-                                                <div className="pontos-row" key={ponto.id}>
+                                                <div key={ponto.id}>
+                                                <div className="pontos-row">
                                                     {editandoPontoId === ponto.id ? (
                                                         <>
                                                             <input
@@ -595,25 +598,60 @@ function RegiaoGrupos() {
                                                                     </select>
                                                                 )}
 
-                                                                <button
-                                                                    onClick={() =>
-                                                                        setEditandoPontoId(ponto.id)
-                                                                    }
-                                                                >
-                                                                    Editar
-                                                                </button>
+                                                                <div className="acoes-botoes">
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            setEditandoPontoId(ponto.id)
+                                                                        }
+                                                                    >
+                                                                        Editar
+                                                                    </button>
 
-                                                                <button
-                                                                    className="btn-danger"
-                                                                    onClick={() =>
-                                                                        excluirPonto(grupo.id, ponto)
-                                                                    }
-                                                                >
-                                                                    Excluir
-                                                                </button>
+                                                                    <button
+                                                                        className="btn-danger"
+                                                                        onClick={() =>
+                                                                            excluirPonto(grupo.id, ponto)
+                                                                        }
+                                                                    >
+                                                                        Excluir
+                                                                    </button>
+
+                                                                    <button
+                                                                        className="btn-preview"
+                                                                        onClick={() => {
+                                                                            if (previewPontoId === ponto.id) {
+                                                                                setPreviewPontoId(null);
+                                                                                return;
+                                                                            }
+
+                                                                            setPreviewPontoId(ponto.id);
+                                                                            setPreviewVersion((v) => v + 1);
+                                                                        }}
+                                                                    >
+                                                                        {previewPontoId === ponto.id
+                                                                            ? "Ocultar"
+                                                                            : "Preview"}
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </>
                                                     )}
+                                                </div>
+
+                                                {previewPontoId === ponto.id && (
+                                                    <div className="preview-mapa">
+                                                        <MapaRota
+                                                            key={`${ponto.id}-${previewVersion}`}
+                                                            pontos={[
+                                                                {
+                                                                    nome: ponto.nomePonto,
+                                                                    lat: Number(ponto.latitude),
+                                                                    lng: Number(ponto.longitude)
+                                                                }
+                                                            ]}
+                                                        />
+                                                    </div>
+                                                )}
                                                 </div>
                                             ))}
 

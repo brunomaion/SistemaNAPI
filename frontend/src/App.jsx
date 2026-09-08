@@ -7,7 +7,6 @@ import Perfil from "./pages/Perfil";
 import Gerenciar from "./pages/GerenciarUsuarios";
 
 import Regiao from "./pages/Regiao";
-import RegiaoPontos from "./pages/Regiao/RegiaoPontos";
 import RegiaoGrupos from "./pages/Regiao/RegiaoGrupos";
 import RegiaoOtimizacao from "./pages/Regiao/RegiaoOtimizacao";
 import RegiaoConfiguracoes from "./pages/Regiao/RegiaoConfiguracoes";
@@ -24,7 +23,6 @@ function App() {
                 <Route path="/gerenciarusuarios" element={<Gerenciar />} />
 
                 <Route path="/regiao/:id" element={<Regiao />} />
-                <Route path="/regiao/:id/pontos" element={<RegiaoPontos />} />
                 <Route path="/regiao/:id/grupos" element={<RegiaoGrupos />} />
                 <Route path="/regiao/:id/otimizacao" element={<RegiaoOtimizacao />} />
                 <Route path="/regiao/:id/configuracoes" element={<RegiaoConfiguracoes />} />

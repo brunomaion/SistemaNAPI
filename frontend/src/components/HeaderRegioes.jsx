@@ -57,13 +57,6 @@ function HeaderRegioes() {
                 </NavLink>
 
                 <NavLink
-                    to={`/regiao/${id}/pontos`}
-                    className="regiao-link"
-                >
-                    Pontos
-                </NavLink>
-
-                <NavLink
                     to={`/regiao/${id}/grupos`}
                     className="regiao-link"
                 >

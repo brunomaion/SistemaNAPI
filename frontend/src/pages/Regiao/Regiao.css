@@ -147,6 +147,17 @@
     font-weight: 500;
 }
 
+.mensagem-erro {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #fdecea;
+    color: #b00020;
+    border: 1px solid #ff0000;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .grupo-card {
     width: 100%;
     box-sizing: border-box;
@@ -395,6 +406,12 @@
     border-radius: 6px;
     font-size: 13px;
     font: inherit;
+}
+
+.acoes-botoes {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
 }
 
 .actions button {

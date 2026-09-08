@@ -1,0 +1,59 @@
+# ===== Geral / SO =====
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+*.swp
+
+# ===== Editores/IDEs =====
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+.factorypath
+.apt_generated/
+.springBeans
+.sts4-cache/
+out/
+bin/
+
+# ===== Backend (Java / Gradle) =====
+backend/build/
+backend/.gradle/
+backend/bin/
+backend/HELP.md
+!backend/gradle/wrapper/gradle-wrapper.jar
+
+# ===== Frontend (Node / Vite) =====
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
+frontend/*.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# ===== Clustering service (Python) =====
+clustering-service/.venv/
+clustering-service/venv/
+clustering-service/env/
+clustering-service/__pycache__/
+clustering-service/**/__pycache__/
+clustering-service/*.pyc
+clustering-service/.pytest_cache/
+
+# ===== Segredos / configs locais =====
+**/application-local.properties
+**/application-secrets.properties
+**/*.env
+**/.env
+**/.env.*
+!**/.env.example
