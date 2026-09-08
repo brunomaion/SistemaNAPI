@@ -1,85 +1,85 @@
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./HeaderColetas.css";
+import "./HeaderRegioes.css";
 
-function HeaderColetas() {
+function HeaderRegioes() {
     const { id } = useParams();
-    const [coleta, setColeta] = useState(null);
+    const [regiao, setRegiao] = useState(null);
 
     useEffect(() => {
-        async function carregarColeta() {
+        async function carregarRegiao() {
             try {
                 const response = await fetch(
-                    `http://localhost:8080/coletas/${id}`
+                    `http://localhost:8080/regioes/${id}`
                 );
 
                 if (!response.ok) {
-                    throw new Error("Erro ao buscar coleta");
+                    throw new Error("Erro ao buscar região");
                 }
 
                 const data = await response.json();
 
-                setColeta(data);
+                setRegiao(data);
             } catch (error) {
-                console.error("Erro ao buscar coleta:", error);
+                console.error("Erro ao buscar região:", error);
             }
         }
 
         if (id) {
-            carregarColeta();
+            carregarRegiao();
         }
     }, [id]);
 
     return (
-        <div className="header-coletas">
+        <div className="header-regioes">
 
-            <div className="coletas-header coleta-title">
+            <div className="regioes-header regiao-title">
                 <h1>
-                    {coleta?.nomeColeta || `Coleta ${id}`}
+                    {regiao?.nomeRegiao || `Região ${id}`}
                 </h1>
             </div>
 
-            <nav className="coletas-header">
+            <nav className="regioes-header">
 
                 <NavLink
                     to="/home"
-                    className="coleta-link"
+                    className="regiao-link"
                 >
                     Voltar
                 </NavLink>
 
                 <NavLink
-                    to={`/coleta/${id}`}
-                    className="coleta-link"
+                    to={`/regiao/${id}`}
+                    className="regiao-link"
                     end
                 >
                     Início
                 </NavLink>
 
                 <NavLink
-                    to={`/coleta/${id}/pontos`}
-                    className="coleta-link"
+                    to={`/regiao/${id}/pontos`}
+                    className="regiao-link"
                 >
                     Pontos
                 </NavLink>
 
                 <NavLink
-                    to={`/coleta/${id}/grupos`}
-                    className="coleta-link"
+                    to={`/regiao/${id}/grupos`}
+                    className="regiao-link"
                 >
                     Grupos
                 </NavLink>
 
                 <NavLink
-                    to={`/coleta/${id}/otimizacao`}
-                    className="coleta-link"
+                    to={`/regiao/${id}/otimizacao`}
+                    className="regiao-link"
                 >
                     Otimização
                 </NavLink>
 
                 <NavLink
-                    to={`/coleta/${id}/configuracoes`}
-                    className="coleta-link"
+                    to={`/regiao/${id}/configuracoes`}
+                    className="regiao-link"
                 >
                     Configurações
                 </NavLink>
@@ -90,4 +90,4 @@ function HeaderColetas() {
     );
 }
 
-export default HeaderColetas;
+export default HeaderRegioes;

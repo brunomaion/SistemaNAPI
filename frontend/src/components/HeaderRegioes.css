@@ -1,4 +1,4 @@
-.coletas-header {
+.regioes-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -9,17 +9,17 @@
     margin-bottom: 20px;
 }
 
-.coleta-title {
+.regiao-title {
     justify-content: center;
 }
 
-.coleta-title h1 {
+.regiao-title h1 {
     margin: 0;
     color: #000000;
     font-size: 24px;
 }
 
-.coleta-link {
+.regiao-link {
     text-decoration: none;
     color: #000000;
     padding: 10px 15px;
@@ -28,31 +28,31 @@
     transition: 0.2s;
 }
 
-.coleta-link:hover {
+.regiao-link:hover {
     background: rgba(0, 159, 16, 0.1);
 }
 
-.coleta-link.active {
+.regiao-link.active {
     background: #009f10;
     color: #ffffff;
 }
 
 @media (max-width: 700px) {
-    .coletas-header {
+    .regioes-header {
         gap: 6px;
         padding: 12px;
         overflow-x: auto;
     }
 
-    .coleta-title {
+    .regiao-title {
         justify-content: flex-start;
     }
 
-    .coleta-title h1 {
+    .regiao-title h1 {
         font-size: 20px;
     }
 
-    .coleta-link {
+    .regiao-link {
         flex: 0 0 auto;
         padding: 8px 10px;
         font-size: 14px;

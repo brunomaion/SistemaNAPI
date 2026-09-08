@@ -5,22 +5,22 @@ import "./Home.css";
 
 function Home() {
     const navigate = useNavigate();
-    const [coletas, setColetas] = useState([]);
+    const [regioes, setRegioes] = useState([]);
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
-    const [nomeColeta, setNomeColeta] = useState("");
+    const [nomeRegiao, setNomeRegiao] = useState("");
     const [dataInicio, setDataInicio] = useState("");
     const [dataFim, setDataFim] = useState("");
 
     useEffect(() => {
-        carregarColetas();
+        carregarRegioes();
     }, []);
 
-    async function carregarColetas() {
+    async function carregarRegioes() {
         try {
-            const resposta = await fetch("http://localhost:8080/coletas");
-            if (!resposta.ok) throw new Error("Erro ao buscar coletas");
+            const resposta = await fetch("http://localhost:8080/regioes");
+            if (!resposta.ok) throw new Error("Erro ao buscar regiões");
             const dados = await resposta.json();
-            setColetas(dados);
+            setRegioes(dados);
         } catch (erro) {
             console.error("Erro:", erro);
         }
@@ -32,46 +32,46 @@ function Home() {
 
     function cancelarFormulario() {
         setMostrarFormulario(false);
-        setNomeColeta("");
+        setNomeRegiao("");
         setDataInicio("");
         setDataFim("");
     }
 
-    async function adicionarColeta(e) {
+    async function adicionarRegiao(e) {
         e.preventDefault();
-        if (!nomeColeta.trim()) {
-            alert("O nome da coleta é obrigatório.");
+        if (!nomeRegiao.trim()) {
+            alert("O nome da região é obrigatório.");
             return;
         }
 
-        const novaColeta = {
-            nomeColeta: nomeColeta.trim(),
+        const novaRegiao = {
+            nomeRegiao: nomeRegiao.trim(),
             dataInicio: dataInicio,
             dataFim: dataFim
         };
 
         try {
-            const resposta = await fetch("http://localhost:8080/coletas", {
+            const resposta = await fetch("http://localhost:8080/regioes", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(novaColeta)
+                body: JSON.stringify(novaRegiao)
             });
 
-            if (!resposta.ok) throw new Error("Erro ao criar coleta");
+            if (!resposta.ok) throw new Error("Erro ao criar região");
 
-            const coletaCriada = await resposta.json();
-            setColetas((coletasAtuais) => [...coletasAtuais, coletaCriada]);
+            const regiaoCriada = await resposta.json();
+            setRegioes((regioesAtuais) => [...regioesAtuais, regiaoCriada]);
             cancelarFormulario();
         } catch (erro) {
             console.error("Erro:", erro);
-            alert("Erro ao criar a coleta.");
+            alert("Erro ao criar a região.");
         }
     }
 
-    function abrirColeta(coleta) {
-        navigate(`/coleta/${coleta.id}`);
+    function abrirRegiao(regiao) {
+        navigate(`/regiao/${regiao.id}`);
     }
 
     return (
@@ -82,22 +82,22 @@ function Home() {
 
                 {!mostrarFormulario && (
                     <button className="btn-add" onClick={abrirFormulario}>
-                        Adicionar Coleta
+                        Adicionar Região
                     </button>
                 )}
 
                 {mostrarFormulario && (
-                    <section className="formulario-coleta">
-                        <form onSubmit={adicionarColeta}>
-                            <h2>Nova Coleta</h2>
+                    <section className="formulario-regiao">
+                        <form onSubmit={adicionarRegiao}>
+                            <h2>Nova Região</h2>
 
                             <div className="campo">
-                                <label htmlFor="nomeColeta">Nome da Coleta</label>
+                                <label htmlFor="nomeRegiao">Nome da Região</label>
                                 <input
-                                    id="nomeColeta"
+                                    id="nomeRegiao"
                                     type="text"
-                                    value={nomeColeta}
-                                    onChange={(e) => setNomeColeta(e.target.value)}
+                                    value={nomeRegiao}
+                                    onChange={(e) => setNomeRegiao(e.target.value)}
                                     required
                                 />
                             </div>
@@ -126,7 +126,7 @@ function Home() {
 
                             <div className="botoes-formulario">
                                 <button type="submit" className="btn-salvar">
-                                    Criar Coleta
+                                    Criar Região
                                 </button>
                                 <button type="button" className="btn-cancelar" onClick={cancelarFormulario}>
                                     Cancelar
@@ -136,27 +136,27 @@ function Home() {
                     </section>
                 )}
 
-                <h2>Coletas</h2>
+                <h2>Regiões</h2>
 
-                <div className="coletas-containers">
-                    {coletas.length === 0 ? (
-                        <p>Nenhuma coleta cadastrada.</p>
+                <div className="regioes-containers">
+                    {regioes.length === 0 ? (
+                        <p>Nenhuma região cadastrada.</p>
                     ) : (
-                        coletas.map((coleta) => (
-                            <div className="coleta-card" key={coleta.id} onClick={() => abrirColeta(coleta)}>
-                                <h2>{coleta.nomeColeta}</h2>
-                                <p>Quantidade de grupos: {coleta.grupos?.length || 0}</p>
+                        regioes.map((regiao) => (
+                            <div className="regiao-card" key={regiao.id} onClick={() => abrirRegiao(regiao)}>
+                                <h2>{regiao.nomeRegiao}</h2>
+                                <p>Quantidade de grupos: {regiao.grupos?.length || 0}</p>
                                 <p>
                                     Quantidade de pontos:{" "}
-                                    {coleta.grupos
-                                        ? coleta.grupos.reduce(
+                                    {regiao.grupos
+                                        ? regiao.grupos.reduce(
                                               (total, grupo) => total + (grupo.pontos?.length || 0),
                                               0
                                           )
                                         : 0}
                                 </p>
-                                <p>Data de início: {coleta.dataInicio || "-"}</p>
-                                <p>Data de término: {coleta.dataFim || "-"}</p>
+                                <p>Data de início: {regiao.dataInicio || "-"}</p>
+                                <p>Data de término: {regiao.dataFim || "-"}</p>
                             </div>
                         ))
                     )}

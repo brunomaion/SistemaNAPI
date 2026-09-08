@@ -6,11 +6,11 @@ import Home from "./pages/Home";
 import Perfil from "./pages/Perfil";
 import Gerenciar from "./pages/GerenciarUsuarios";
 
-import Coleta from "./pages/Coleta";
-import ColetaPontos from "./pages/Coleta/ColetaPontos";
-import ColetaGrupos from "./pages/Coleta/ColetaGrupos";
-import ColetaOtimizacao from "./pages/Coleta/ColetaOtimizacao";
-import ColetaConfiguracoes from "./pages/Coleta/ColetaConfiguracoes";
+import Regiao from "./pages/Regiao";
+import RegiaoPontos from "./pages/Regiao/RegiaoPontos";
+import RegiaoGrupos from "./pages/Regiao/RegiaoGrupos";
+import RegiaoOtimizacao from "./pages/Regiao/RegiaoOtimizacao";
+import RegiaoConfiguracoes from "./pages/Regiao/RegiaoConfiguracoes";
 
 function App() {
     return (
@@ -23,11 +23,11 @@ function App() {
                 <Route path="/perfil" element={<Perfil />} />
                 <Route path="/gerenciarusuarios" element={<Gerenciar />} />
 
-                <Route path="/coleta/:id" element={<Coleta />} />
-                <Route path="/coleta/:id/pontos" element={<ColetaPontos />} />
-                <Route path="/coleta/:id/grupos" element={<ColetaGrupos />} />
-                <Route path="/coleta/:id/otimizacao" element={<ColetaOtimizacao />} />
-                <Route path="/coleta/:id/configuracoes" element={<ColetaConfiguracoes />} />
+                <Route path="/regiao/:id" element={<Regiao />} />
+                <Route path="/regiao/:id/pontos" element={<RegiaoPontos />} />
+                <Route path="/regiao/:id/grupos" element={<RegiaoGrupos />} />
+                <Route path="/regiao/:id/otimizacao" element={<RegiaoOtimizacao />} />
+                <Route path="/regiao/:id/configuracoes" element={<RegiaoConfiguracoes />} />
 
             </Routes>
         </BrowserRouter>

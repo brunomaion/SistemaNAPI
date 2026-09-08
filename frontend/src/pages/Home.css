@@ -38,7 +38,7 @@
     opacity: 0.9;
 }
 
-.formulario-coleta {
+.formulario-regiao {
     display: block;
     width: 100%;
     max-width: none;
@@ -51,7 +51,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.formulario-coleta form {
+.formulario-regiao form {
     display: block;
     width: 100%;
     max-width: none;
@@ -59,7 +59,7 @@
     padding: 0;
 }
 
-.formulario-coleta h2 {
+.formulario-regiao h2 {
     margin: 0 0 20px;
     font-size: 20px;
 }
@@ -120,14 +120,14 @@
 }
 
 
-.coletas-containers {
+.regioes-containers {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
 }
 
-.coleta-card {
+.regiao-card {
     width: 100%;
     box-sizing: border-box;
     background: white;
@@ -139,17 +139,17 @@
     transition: 0.2s;
 }
 
-.coleta-card:hover {
+.regiao-card:hover {
     transform: scale(1.01);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
-.coleta-card h2 {
+.regiao-card h2 {
     margin: 0 0 14px;
     font-size: 20px;
 }
 
-.coleta-card p {
+.regiao-card p {
     margin: 7px 0;
     color: #555;
 }

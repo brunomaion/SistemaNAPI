@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, CircleMarker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 export default function MapaRota({ pontos = [] }) {
@@ -19,16 +19,35 @@ export default function MapaRota({ pontos = [] }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {pontos.map((ponto, i) => (
-                <Marker
-                    key={i}
-                    position={[ponto.lat, ponto.lng]}
-                >
-                    <Popup>
-                        {ponto.nome || `Ponto ${i + 1}`}
-                    </Popup>
-                </Marker>
-            ))}
+            {pontos.map((ponto, i) =>
+                ponto.cor ? (
+                    <CircleMarker
+                        key={i}
+                        center={[ponto.lat, ponto.lng]}
+                        radius={9}
+                        pathOptions={{
+                            color: ponto.cor,
+                            fillColor: ponto.cor,
+                            fillOpacity: 0.85
+                        }}
+                    >
+                        <Popup>
+                            {ponto.grupoLabel
+                                ? `${ponto.grupoLabel} — ${ponto.nome || `Ponto ${i + 1}`}`
+                                : ponto.nome || `Ponto ${i + 1}`}
+                        </Popup>
+                    </CircleMarker>
+                ) : (
+                    <Marker
+                        key={i}
+                        position={[ponto.lat, ponto.lng]}
+                    >
+                        <Popup>
+                            {ponto.nome || `Ponto ${i + 1}`}
+                        </Popup>
+                    </Marker>
+                )
+            )}
         </MapContainer>
     );
 }

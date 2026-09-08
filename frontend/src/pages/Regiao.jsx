@@ -1,31 +1,31 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
-import HeaderColetas from "../components/HeaderColetas";
-import "./Coleta/Coleta.css";
+import HeaderRegioes from "../components/HeaderRegioes";
+import "./Regiao/Regiao.css";
 
-function Coleta() {
+function Regiao() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [coleta, setColeta] = useState(null);
+    const [regiao, setRegiao] = useState(null);
     const [grupos, setGrupos] = useState([]);
 
     useEffect(() => {
-        carregarColeta();
+        carregarRegiao();
     }, [id]);
 
-    async function carregarColeta() {
+    async function carregarRegiao() {
         try {
-            const resposta = await fetch(`http://localhost:8080/coletas/${id}`);
+            const resposta = await fetch(`http://localhost:8080/regioes/${id}`);
 
             if (!resposta.ok) {
-                throw new Error("Erro ao buscar coleta");
+                throw new Error("Erro ao buscar região");
             }
 
             const dados = await resposta.json();
 
-            setColeta(dados);
+            setRegiao(dados);
             setGrupos(dados.grupos || []);
         } catch (erro) {
             console.error("Erro:", erro);
@@ -35,7 +35,7 @@ function Coleta() {
     async function adicionarGrupo() {
         try {
             const resposta = await fetch(
-                `http://localhost:8080/coletas/${id}/grupos`,
+                `http://localhost:8080/regioes/${id}/grupos`,
                 {
                     method: "POST"
                 }
@@ -57,11 +57,11 @@ function Coleta() {
         navigate(`/grupo/${grupo.id}`);
     }
 
-    if (!coleta) {
+    if (!regiao) {
         return (
-            <div className="coleta-container">
+            <div className="regiao-container">
                 <Header />
-                <div className="coleta-content">
+                <div className="regiao-content">
                     <p>Carregando...</p>
                 </div>
             </div>
@@ -69,22 +69,22 @@ function Coleta() {
     }
 
     return (
-        <div className="coleta-container">
+        <div className="regiao-container">
             <Header />
 
-            <div className="coleta-content">
-                <HeaderColetas />
+            <div className="regiao-content">
+                <HeaderRegioes />
 
 
-                <div className="coleta-subcontainer">
+                <div className="regiao-subcontainer">
                     <p>
                         <strong>Data de início:</strong>{" "}
-                        {coleta.dataInicio}
+                        {regiao.dataInicio}
                     </p>
 
                     <p>
                         <strong>Data de término:</strong>{" "}
-                        {coleta.dataFim}
+                        {regiao.dataFim}
                     </p>
 
                     <div className="grupos-header">
@@ -101,7 +101,7 @@ function Coleta() {
                     <div className="grupos-container">
                         {grupos.length === 0 ? (
                             <p>
-                                Esta coleta ainda não possui grupos.
+                                Esta região ainda não possui grupos.
                             </p>
                         ) : (
                             grupos.map((grupo) => (
@@ -111,7 +111,7 @@ function Coleta() {
                                     onClick={() => abrirGrupo(grupo)}
                                 >
                                     <h3>
-                                        Grupo {grupo.id}
+                                        Grupo {grupo.numero}
                                     </h3>
 
                                     <p>
@@ -131,4 +131,4 @@ function Coleta() {
     );
 }
 
-export default Coleta;
+export default Regiao;
